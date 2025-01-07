@@ -1,0 +1,12 @@
+/export/server/sqoop/bin/sqoop import \
+--connect jdbc:mysql://192.168.88.163:3306/insurance \
+--username root \
+--password 123456 \
+--table policy_benefit \
+--hive-table insurance_ods.policy_benefit \
+--hive-import \
+--hive-overwrite \
+--fields-terminated-by '\t' \
+--delete-target-dir \
+-m 2 \
+--split-by age_buy

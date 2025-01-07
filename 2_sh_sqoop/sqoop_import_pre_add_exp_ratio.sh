@@ -1,0 +1,11 @@
+/export/server/sqoop/bin/sqoop import \
+--connect jdbc:mysql://192.168.88.163:3306/insurance \
+--username root \
+--password 123456 \
+--table pre_add_exp_ratio \
+--hive-table insurance_ods.pre_add_exp_ratio \
+--hive-import \
+--hive-overwrite \
+--fields-terminated-by '\t' \
+--delete-target-dir \
+-m 1
