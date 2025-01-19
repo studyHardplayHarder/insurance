@@ -1,9 +1,9 @@
 --开启spark-sql客户端，将下面的代码粘贴到spark-sql中运行。
 drop database if exists insurance_ods cascade;
-create database insurance_ods;
+create database insurance_ods location 'hdfs://node1:8020/user/hive/warehouse/insurance_ods.db';
 use insurance_ods;
 
-drop  table if exists mort_10_13;
+drop table if exists mort_10_13;
 create table mort_10_13(
                            age  smallint comment '年龄',
                            cl1 decimal(10, 8) comment '非养老类业务一表，男（CL1）',
