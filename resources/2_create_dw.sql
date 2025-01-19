@@ -1,5 +1,5 @@
-drop database  if exists insurance_dw cascade ;
-create database insurance_dw;
+drop database  if exists insurance_dw cascade;
+create database insurance_dw location 'hdfs://node1:8020/user/hive/warehouse/insurance_dw.db';
 use insurance_dw;
 
 drop table if exists prem_src;
@@ -39,7 +39,7 @@ create table prem_src
     db4           decimal(5, 2) comment '身故给付保险金',
     db5           decimal(17, 12) comment '豁免保费因子'
 ) comment '保费因子表（到每个保单年度）'
-    row format delimited fields terminated by '\t';
+    row format delimited fields terminated by '\t' location 'hdfs://node1:8020/user/hive/warehouse/insurance_dw.db/prem_src';
 
 drop table if exists prem_std;
 create table prem_std
@@ -50,7 +50,7 @@ create table prem_std
     bpp     string comment '保障期',
     prem    decimal(14, 6) comment '每期交的保费'
 ) comment '标准保费结果表' row format delimited
-    fields terminated by '\t';
+    fields terminated by '\t' location 'hdfs://node1:8020/user/hive/warehouse/insurance_dw.db/prem_std';;
 
 drop table if exists cv_src;
 create table cv_src(
@@ -102,7 +102,7 @@ create table cv_src(
                        cv_1b       DECIMAL(17, 7) comment '现金价值年末（生存给付后）',
                        cv_2        DECIMAL(17, 7) comment '现金价值年中'
 )comment '现金价值表（到每个保单年度）' row format delimited
-    fields terminated by ',';
+    fields terminated by ',' location 'hdfs://node1:8020/user/hive/warehouse/insurance_dw.db/cv_src';
 
 drop table if exists prem_cv;
 create table prem_cv
@@ -112,7 +112,7 @@ create table prem_cv
     ppp     smallint comment '缴费期间',
     prem_cv      decimal(15, 7) comment '保单价值准备金毛保险费(Preuim)'
 )comment '保单价值准备金毛保险费表' row format delimited
-    fields terminated by '\t';
+    fields terminated by '\t' location 'hdfs://node1:8020/user/hive/warehouse/insurance_dw.db/prem_cv';
 
 drop table if exists rsv_src;
 create table rsv_src
@@ -164,4 +164,4 @@ create table rsv_src
     rsv1_re       decimal(17, 7) comment '修正责任准备金年末',
     rsv2_re       decimal(17, 7) comment '修正责任准备金年初(未加当年初纯保费）'
 )comment '准备金表（到每个保单年度）' row format delimited
-    fields terminated by ',';
+    fields terminated by ',' location 'hdfs://node1:8020/user/hive/warehouse/insurance_dw.db/rsv_src';
